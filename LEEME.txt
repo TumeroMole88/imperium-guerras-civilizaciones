@@ -1,1 +1,15 @@
-Sprites de caminar para Imperium. Reemplaza los archivos siervo-caminar-1.png a siervo-caminar-5.png del repositorio. Incluye 7 fotogramas; para usar los 7 hay que cambiar el array en index.html a n<=7. La corrección de reclutamiento requiere además editar index.html; estos archivos por sí solos no cambian la lógica de maná.
+IMPERIUM - paquete corregido v0.8
+
+Sube TODOS los archivos de esta carpeta a la raíz del repositorio GitHub y acepta reemplazar los existentes.
+No subas la carpeta como una subcarpeta ni solo el ZIP.
+
+Cambios:
+- Siervo lanzapiedras: 20 de maná.
+- Guerrero con espada: 40 de maná, usa los sprites nuevos.
+- Los demás soldados conservan sus costes: 60, 100, 135 y 180.
+- Reclutamiento activado solo después de iniciar la batalla, con maná suficiente.
+- El botón de reclutamiento descuenta el maná y agrega la unidad al campo.
+- La reserva empieza en cero y regenera durante la batalla.
+- Cache del service worker actualizado a v8.
+
+Después del commit, abre el sitio y haz recarga forzada (Cmd+Shift+R). Si sigue mostrando la versión anterior, cierra la pestaña del juego y vuelve a abrirlo.
