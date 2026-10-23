@@ -1,5 +1,11 @@
-IMPERIUM WEB v0.6
+IMPERIUM 0.7
 
-Actualización: integra los sprites de caminar del siervo lanzapiedras tomados de la hoja de sprites proporcionada. Odiseo cuesta 200 de maná.
+Cambios:
+- El mana solo se regenera después de pulsar Iniciar batalla.
+- El maná permanece en cero durante la preparación.
+- Siervo lanzapiedras dibujado con sprites más grandes, manteniendo la proporción para evitar recortes.
+- Incluye sprites de caminar y lanzar piedras.
+- Odiseo cuesta 200 de maná.
+- Cache del service worker renovada para forzar actualización.
 
-Para publicar: sube y reemplaza en la raíz de GitHub los archivos individuales del ZIP, especialmente index.html y sw.js, y añade las cinco imágenes siervo-caminar-1.png a siervo-caminar-5.png. No basta con subir el ZIP.
+Para actualizar GitHub Pages, carga los archivos individuales en la raíz del repositorio y reemplaza los archivos con el mismo nombre. No subas solo el ZIP.
