@@ -1,11 +1,1 @@
-IMPERIUM 0.7
-
-Cambios:
-- El mana solo se regenera después de pulsar Iniciar batalla.
-- El maná permanece en cero durante la preparación.
-- Siervo lanzapiedras dibujado con sprites más grandes, manteniendo la proporción para evitar recortes.
-- Incluye sprites de caminar y lanzar piedras.
-- Odiseo cuesta 200 de maná.
-- Cache del service worker renovada para forzar actualización.
-
-Para actualizar GitHub Pages, carga los archivos individuales en la raíz del repositorio y reemplaza los archivos con el mismo nombre. No subas solo el ZIP.
+Sprites de caminar para Imperium. Reemplaza los archivos siervo-caminar-1.png a siervo-caminar-5.png del repositorio. Incluye 7 fotogramas; para usar los 7 hay que cambiar el array en index.html a n<=7. La corrección de reclutamiento requiere además editar index.html; estos archivos por sí solos no cambian la lógica de maná.
