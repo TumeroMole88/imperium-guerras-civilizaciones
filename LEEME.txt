@@ -1,14 +1,21 @@
-IMPERIUM - paquete corregido v0.9
+IMPERIUM v1.3 — paquete completo para GitHub Pages
 
-Sube TODOS los archivos de esta carpeta a la raíz del repositorio GitHub y acepta reemplazar los existentes. No subas la carpeta como subcarpeta ni solo el ZIP.
+INSTALACIÓN
+1. Descarga y descomprime este ZIP.
+2. En el repositorio GitHub, entra en Agregar archivo → Cargar archivos.
+3. Sube TODOS los archivos de esta carpeta directamente a la raíz del repositorio, reemplazando los existentes.
+4. Pulsa Commit changes y espera a que GitHub Pages termine el despliegue.
+5. Abre la página y fuerza recarga con Cmd+Shift+R.
 
-Cambios:
-- Maná más rápido: 5 por segundo (siervo a los 4 segundos; guerrero con espada a los 8 segundos).
-- Siervo lanzapiedras: 20 de maná.
-- Guerrero con espada: 40 de maná, con sprites nuevos.
-- Los demás soldados conservan sus costes: 60, 100, 135 y 180.
-- Botones habilitados solo durante la batalla, al tener maná suficiente.
-- Unidades aparecen más cerca del centro, con sprites más grandes y nombre visible encima.
-- Cache del service worker actualizada a v9.
+INCLUYE
+- Fondo de batalla actualizado.
+- Torre romana y torre gala con estados visuales de espera, ataque, daño/destrucción.
+- Lanzapiedras romano con sprites separados de espera, caminar y correr.
+- Guerrero con espada con animación de caminar.
+- Lanzapiedras celta enemigo con 10 fotogramas de caminar recortados desde la hoja suministrada, con transparencia y lienzo común.
+- Maná a 5 puntos por segundo durante la batalla.
+- Enemigos que escalan de forma progresiva: coste equivalente 20, 40, 60, 100, 135 y 180, con más vida y daño en cada etapa.
+- Caché del service worker renovada a imperium-v13.
 
-Después del commit, espera el despliegue de GitHub Pages y recarga con Cmd+Shift+R.
+IMPORTANTE
+La hoja del guerrero galo suministrada contiene varias acciones; en esta versión se incorporó la fila de caminar. Las demás acciones del galo y animaciones específicas de ataque para todas las tropas todavía requieren integración adicional. Las torres usan fotogramas extraídos de las hojas recibidas; conviene probarlas en el navegador publicado y ajustar visualmente si hiciera falta.
