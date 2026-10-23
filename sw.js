@@ -1,4 +1,4 @@
-const CACHE='imperium-v8-cache';
+const CACHE='imperium-v9-cache';
 const ASSETS=["./", "./index.html", "./campo-batalla.png", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./siervo-caminar-1.png", "./siervo-caminar-2.png", "./siervo-caminar-3.png", "./siervo-caminar-4.png", "./siervo-caminar-5.png", "./siervo-caminar-6.png", "./siervo-caminar-7.png", "./siervo-lanzar-1.png", "./siervo-lanzar-2.png", "./siervo-lanzar-3.png", "./guerrero-espada-caminar-1.png", "./guerrero-espada-caminar-2.png", "./guerrero-espada-caminar-3.png", "./guerrero-espada-caminar-4.png", "./guerrero-espada-caminar-5.png", "./guerrero-espada-caminar-6.png", "./guerrero-espada-caminar-7.png"];
 self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)));});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});

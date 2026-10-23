@@ -1,15 +1,14 @@
-IMPERIUM - paquete corregido v0.8
+IMPERIUM - paquete corregido v0.9
 
-Sube TODOS los archivos de esta carpeta a la raíz del repositorio GitHub y acepta reemplazar los existentes.
-No subas la carpeta como una subcarpeta ni solo el ZIP.
+Sube TODOS los archivos de esta carpeta a la raíz del repositorio GitHub y acepta reemplazar los existentes. No subas la carpeta como subcarpeta ni solo el ZIP.
 
 Cambios:
+- Maná más rápido: 5 por segundo (siervo a los 4 segundos; guerrero con espada a los 8 segundos).
 - Siervo lanzapiedras: 20 de maná.
-- Guerrero con espada: 40 de maná, usa los sprites nuevos.
+- Guerrero con espada: 40 de maná, con sprites nuevos.
 - Los demás soldados conservan sus costes: 60, 100, 135 y 180.
-- Reclutamiento activado solo después de iniciar la batalla, con maná suficiente.
-- El botón de reclutamiento descuenta el maná y agrega la unidad al campo.
-- La reserva empieza en cero y regenera durante la batalla.
-- Cache del service worker actualizado a v8.
+- Botones habilitados solo durante la batalla, al tener maná suficiente.
+- Unidades aparecen más cerca del centro, con sprites más grandes y nombre visible encima.
+- Cache del service worker actualizada a v9.
 
-Después del commit, abre el sitio y haz recarga forzada (Cmd+Shift+R). Si sigue mostrando la versión anterior, cierra la pestaña del juego y vuelve a abrirlo.
+Después del commit, espera el despliegue de GitHub Pages y recarga con Cmd+Shift+R.
