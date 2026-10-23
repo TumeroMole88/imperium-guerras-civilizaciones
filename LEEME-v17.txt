@@ -1,0 +1,12 @@
+IMPERIUM v1.7 — ESCALA UNIFORME
+
+Este paquete ajusta las tropas a una altura de dibujo común y reduce el tamaño de ambas torres para que las unidades no parezcan gigantes en el escenario.
+
+PUBLICACIÓN:
+1. Descomprime este ZIP.
+2. Selecciona todos los archivos dentro, no la carpeta contenedora.
+3. Súbelos a la raíz del repositorio GitHub Pages y reemplaza los anteriores.
+4. Haz Commit changes y espera el despliegue.
+5. Abre el juego y recarga con Cmd+Shift+R.
+
+Los sprites de tropa se dibujan con altura de lienzo de 62 px; las torres con 165 px. Se conserva la proporción de cada imagen (sin estirarlas).
