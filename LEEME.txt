@@ -1,14 +1,10 @@
-IMPERIUM PWA — instrucciones
+IMPERIUM v0.2 - paquete web
 
-Este paquete convierte el prototipo en una PWA básica con icono, manifest y caché offline.
+Cambios:
+- Campo de batalla ilustrado nuevo con fortalezas romanas y galas.
+- Maná empieza en 0 y se regenera automáticamente a 5 por segundo.
+- El siervo lanzapiedras está disponible desde el inicio y cuesta 20 maná.
+- Primera oleada enemiga retrasada a 10 segundos y ritmo inicial más lento.
+- Caché PWA actualizada a v2.
 
-Para instalarla en iPhone:
-1. Publica TODO el contenido de esta carpeta en un hosting HTTPS (por ejemplo GitHub Pages).
-2. Abre la URL publicada en Safari en el iPhone.
-3. Toca Compartir > Añadir a pantalla de inicio.
-4. Activa “Abrir como app web” si aparece y toca Añadir.
-
-Importante:
-- Abrir index.html como archivo local NO instala una PWA completa.
-- El hosting debe servir HTTPS.
-- Este prototipo aún no incluye chat, cuentas, compras reales ni multijugador.
+Para actualizar GitHub Pages: sube/reemplaza los archivos de este paquete en la raíz del repositorio y confirma los cambios.
