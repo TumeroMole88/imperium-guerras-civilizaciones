@@ -1,10 +1,6 @@
-IMPERIUM v0.2 - paquete web
-
-Cambios:
-- Campo de batalla ilustrado nuevo con fortalezas romanas y galas.
-- Maná empieza en 0 y se regenera automáticamente a 5 por segundo.
-- El siervo lanzapiedras está disponible desde el inicio y cuesta 20 maná.
-- Primera oleada enemiga retrasada a 10 segundos y ritmo inicial más lento.
-- Caché PWA actualizada a v2.
-
-Para actualizar GitHub Pages: sube/reemplaza los archivos de este paquete en la raíz del repositorio y confirma los cambios.
+IMPERIUM 0.3
+Sube el contenido de esta carpeta a la raíz del repositorio GitHub, reemplazando los archivos anteriores.
+IMPORTANTE: el archivo principal debe llamarse exactamente index.html (sin tilde).
+Incluye index.html, campo-batalla.png, manifest.webmanifest, sw.js y los iconos.
+Después de actualizar GitHub Pages, fuerza recarga con Cmd+Shift+R. En iPhone, cerrar y volver a abrir la app web puede ayudar a actualizar la caché.
+Cambios: interfaz renovada, maná desde cero con recarga permanente, reclutamiento posible antes de iniciar batalla, controles reactivos y enemigos con oleada inicial retrasada.
