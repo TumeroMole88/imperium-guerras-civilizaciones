@@ -1,6 +1,4 @@
-IMPERIUM 0.3
-Sube el contenido de esta carpeta a la raíz del repositorio GitHub, reemplazando los archivos anteriores.
-IMPORTANTE: el archivo principal debe llamarse exactamente index.html (sin tilde).
-Incluye index.html, campo-batalla.png, manifest.webmanifest, sw.js y los iconos.
-Después de actualizar GitHub Pages, fuerza recarga con Cmd+Shift+R. En iPhone, cerrar y volver a abrir la app web puede ayudar a actualizar la caché.
-Cambios: interfaz renovada, maná desde cero con recarga permanente, reclutamiento posible antes de iniciar batalla, controles reactivos y enemigos con oleada inicial retrasada.
+IMPERIUM 0.4
+Sube el contenido de esta carpeta a la raíz del repositorio GitHub, reemplazando index.html y sw.js, junto con los demás archivos si se solicitan.
+Cambios: recarga de maná reducida a 2/s; botón para ampliar reserva +50 cuando está llena; todas las unidades disponibles desde el inicio si tienes maná suficiente; animación de pasos para los soldados; piedras visibles como proyectiles; enemigo aparece más lentamente.
+Archivo principal: index.html sin tilde.
