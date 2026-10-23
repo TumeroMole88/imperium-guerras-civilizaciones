@@ -1,0 +1,14 @@
+IMPERIUM PWA — instrucciones
+
+Este paquete convierte el prototipo en una PWA básica con icono, manifest y caché offline.
+
+Para instalarla en iPhone:
+1. Publica TODO el contenido de esta carpeta en un hosting HTTPS (por ejemplo GitHub Pages).
+2. Abre la URL publicada en Safari en el iPhone.
+3. Toca Compartir > Añadir a pantalla de inicio.
+4. Activa “Abrir como app web” si aparece y toca Añadir.
+
+Importante:
+- Abrir index.html como archivo local NO instala una PWA completa.
+- El hosting debe servir HTTPS.
+- Este prototipo aún no incluye chat, cuentas, compras reales ni multijugador.
