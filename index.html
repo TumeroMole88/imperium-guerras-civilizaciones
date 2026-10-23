@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>IMPERIUM 1.3: Guerras de Civilizaciones</title>
+<title>IMPERIUM 1.6: Guerras de Civilizaciones</title>
 <meta name="theme-color" content="#15100c"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Imperium">
 <link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./icon-192.png">
 <style>
@@ -24,7 +24,7 @@
 @media(max-width:540px){.app{padding:5px}.masthead{padding:9px}.stat{min-width:65px;padding:5px}.stat b{font-size:14px}.layout{gap:7px}.battle-head{padding:7px}.timer{font-size:16px}.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.unit{min-height:105px}.unit .art{height:38px;font-size:29px}.sidebar{display:flex}.health{gap:8px}.action-row button{font-size:11px}.subtitle{letter-spacing:1px}}
 </style></head>
 <body><div class="app">
-<header class="masthead"><div><div class="brand">IMPER<span>IUM</span></div><div class="subtitle">GUERRAS DE CIVILIZACIONES · VERSIÓN 0.7</div></div>
+<header class="masthead"><div><div class="brand">IMPER<span>IUM</span></div><div class="subtitle">GUERRAS DE CIVILIZACIONES · VERSIÓN 1.6</div></div>
 <div class="stats"><div class="stat"><small>ERA</small><b>MONARQUÍA</b></div><div class="stat"><small>NIVEL</small><b id="levelTop">1</b></div><div class="stat"><small>MANÁ</small><b id="manaTop">0/100</b></div><div class="stat"><small>TROPAS</small><b id="troopsTop">0</b></div></div></header>
 <div class="layout"><section class="battle">
 <div class="battle-head"><div class="faction red">🦅 ROMA</div><div class="timer" id="timer">00:00</div><div class="faction blue">GALIA 🐗</div></div>
@@ -50,6 +50,10 @@ const servantRun=[1,2,3,4].map(n=>{const im=new Image();im.src='./lanzapiedras-c
 const celtWalk=[1,2,3,4,5,6,7,8,9,10].map(n=>{const im=new Image();im.src='./galo-lanzapiedras-caminar-'+n+'.png';return im;});
 const servantThrow=[1,2,3].map(n=>{const im=new Image();im.src='./siervo-lanzar-'+n+'.png';return im;});
 const swordWalk=[1,2,3,4,5,6,7].map(n=>{const im=new Image();im.src='./guerrero-espada-caminar-'+n+'.png';return im;});
+const gladiatorIdle=[1,2,3,4,5,6,7,8].map(n=>{const im=new Image();im.src='./gladiador-idle-'+n+'.png';return im;});
+const gladiatorWalk=[1,2,3,4,5,6,7,8].map(n=>{const im=new Image();im.src='./gladiador-caminar-'+n+'.png';return im;});
+const gladiatorAttack=[1,2,3,4,5,6,7,8].map(n=>{const im=new Image();im.src='./gladiador-ataque-'+n+'.png';return im;});
+const gladiatorDeath=[1,2,3,4,5,6,7].map(n=>{const im=new Image();im.src='./gladiador-muerte-'+n+'.png';return im;});
 const romanTower=[1,2,3,4,5,6,7,8,9,10,11].map(n=>{const im=new Image();im.src='./torre-roma-'+n+'.png';return im;});
 const gallicTowerIdle=new Image();gallicTowerIdle.src='./torre-galia-idle.png';
 const gallicTowerSpear=[1,2].map(n=>{const im=new Image();im.src='./torre-galia-lanza-'+n+'.png';return im;});
@@ -58,7 +62,7 @@ const gallicTowerDestroyed=new Image();gallicTowerDestroyed.src='./torre-galia-d
 const units={
 servant:{name:'Siervo lanzapiedras',icon:'🪨',cost:20,level:1,hp:55,damage:12,range:130,speed:34,rate:1.2,kind:'r'},
 sword:{name:'Guerrero con espada',icon:'⚔️',cost:40,level:2,hp:90,damage:19,range:32,speed:36,rate:1.05,kind:'m'},
-gladiator:{name:'Gladiador',icon:'🛡️',cost:60,level:3,hp:145,damage:26,range:32,speed:31,rate:1,kind:'m'},
+gladiator:{name:'Gladiador',icon:'🛡️',cost:60,level:3,hp:180,damage:32,range:36,speed:32,rate:.88,kind:'m'},
 legion:{name:'Legionario',icon:'🏛️',cost:100,level:4,hp:230,damage:34,range:34,speed:29,rate:1.1,kind:'m'},
 cavalry:{name:'Caballería',icon:'🐎',cost:135,level:5,hp:205,damage:42,range:35,speed:57,rate:1.15,kind:'m'},
 chariot:{name:'Carro de guerra',icon:'🏇',cost:180,level:6,hp:320,damage:58,range:40,speed:44,rate:1.25,kind:'m'}
@@ -89,15 +93,15 @@ function spawnEnemy(){
  S.army.push({id:S.nextId++,side:-1,x:1165,y:365+Math.random()*35,hp:Math.round(d.hp*scale),max:Math.round(d.hp*scale),damage:Math.round(d.damage*scale),speed:d.speed,range:d.range,rate:d.rate,kind:d.kind,name:d.name,unitKey:'celt',enemyTier:tier,enemyCost:d.cost,icon:tier===0?'🪨':tier<3?'🗡️':tier===4?'🐎':'🛞',cool:Math.random()});
 }
 function addXP(n){S.xp+=n;let req=100+(S.level-1)*40;while(S.xp>=req){S.xp-=req;S.level++;S.cap+=10;S.regen+=.25;req=100+(S.level-1)*40;message('¡Nivel '+S.level+'! Tu ejército puede reclutar nuevas unidades.');log('Roma alcanza el nivel '+S.level+'.');}}
-function update(dt){if(S.run&&!S.paused&&!S.ended){S.mana=Math.min(S.cap,S.mana+S.regen*dt);}if(!S.run||S.paused||S.ended)return;S.time+=dt;S.enemyClock-=dt;S.towerClock-=dt;if(S.enemyClock<=0){spawnEnemy();S.enemyClock=Math.max(5.5,11-S.time/150); }
+function update(dt){if(S.run&&!S.paused&&!S.ended){S.mana=Math.min(S.cap,S.mana+S.regen*dt);}if(!S.run||S.paused||S.ended)return;S.time+=dt;S.enemyClock-=dt;S.towerClock-=dt;for(const u of S.army){if(u.hp<=0&&!u.dead){u.dead=true;u.deathT=0;log(u.name+' ha caído en combate.');}if(u.dead)u.deathT=(u.deathT||0)+dt;}if(S.enemyClock<=0){spawnEnemy();S.enemyClock=Math.max(5.5,11-S.time/150); }
  if(S.towerClock<=0){for(const side of [1,-1]){const target=S.army.filter(u=>u.hp>0&&u.side===-side).sort((a,b)=>Math.abs(a.x-(side===1?180:1100))-Math.abs(b.x-(side===1?180:1100)))[0];if(target&&Math.abs(target.x-(side===1?180:1100))<390){target.hp-=side===1?16:18;if(target.hp<=0&&target.side===-1){addXP(8);log('Una unidad gala fue eliminada por la torre romana.');}}}S.towerClock=2.2;}
-for(const u of S.army){if(u.hp<=0)continue;let target=null,dist=Infinity;for(const e of S.army){if(e.hp>0&&e.side!==u.side){let dd=Math.abs(e.x-u.x);if(dd<dist){dist=dd;target=e;}}}
+for(const u of S.army){if(u.hp<=0)continue;let target=null,dist=Infinity;for(const e of S.army){if(e.hp>0&&!e.dead&&e.side!==u.side){let dd=Math.abs(e.x-u.x);if(dd<dist){dist=dd;target=e;}}}
 if(target&&dist<=u.range){u.cool-=dt;if(u.cool<=0){if(u.kind==='r'){S.projectiles.push({x:u.x+(u.side===1?20:-20),y:u.y-25,targetId:target.id,side:u.side,damage:u.damage,life:.35});}else{target.hp-=u.damage;if(target.hp<=0&&target.side===-1){addXP(8);log('Una unidad gala ha sido derrotada.');}}u.cool=u.rate;}}else{let goal=target?target.x:(u.side===1?1175:105);let direction=Math.sign(goal-u.x);if(!target||dist>u.range*.8)u.x+=direction*u.speed*dt;}
 if(u.side===1&&u.x>=1090){S.ehp-=u.damage*dt*.65;u.x=1090;}if(u.side===-1&&u.x<=190){S.php-=u.damage*dt*.6;u.x=190;}}
-for(const p of S.projectiles){p.life-=dt;let t=S.army.find(u=>u.id===p.targetId&&u.hp>0);if(t){p.x+=(t.x-p.x)*Math.min(1,dt*8);p.y+=(t.y-25-p.y)*Math.min(1,dt*8);if(p.life<=0){t.hp-=p.damage;if(t.hp<=0&&t.side===-1){addXP(8);log('Una unidad gala ha sido derrotada.');}}}}S.projectiles=S.projectiles.filter(p=>p.life>0);S.army=S.army.filter(u=>u.hp>0&&u.x>20&&u.x<1260);if(S.php<=0||S.ehp<=0){S.ended=true;S.run=false;S.result=S.ehp<=0?'¡VICTORIA DE ROMA!':'¡GALIA HA VENCIDO!';message(S.result);log(S.result);}}
+for(const p of S.projectiles){p.life-=dt;let t=S.army.find(u=>u.id===p.targetId&&u.hp>0&&!u.dead);if(t){p.x+=(t.x-p.x)*Math.min(1,dt*8);p.y+=(t.y-25-p.y)*Math.min(1,dt*8);if(p.life<=0){t.hp-=p.damage;if(t.hp<=0&&t.side===-1){addXP(8);log('Una unidad gala ha sido derrotada.');}}}}S.projectiles=S.projectiles.filter(p=>p.life>0);S.army=S.army.filter(u=>u.dead?(u.deathT||0)<3.2:(u.hp>0&&u.x>20&&u.x<1260));if(S.php<=0||S.ehp<=0){S.ended=true;S.run=false;S.result=S.ehp<=0?'¡VICTORIA DE ROMA!':'¡GALIA HA VENCIDO!';message(S.result);log(S.result);}}
 function fortress(x,side,hp){
  const red=side===1,ratio=Math.max(0,hp/1000);
- let img=null,drawH=red?215:205,frame=0;
+ let img=null,drawH=red?190:190,frame=0;
  if(red){
    if(ratio<=0.01) frame=10;
    else if(ratio<0.25) frame=9;
@@ -125,12 +129,34 @@ function fortress(x,side,hp){
  ctx.fillStyle='#10151b';ctx.fillRect(x-48,208,96,8);
  ctx.fillStyle=red?'#e74c3c':'#55b96a';ctx.fillRect(x-46,210,92*ratio,4);
 }
-function soldier(u){let x=u.x,y=u.y,red=u.side===1;let moving=S.run&&!S.paused&&!S.ended;let phase=moving?S.time*9+u.id:0;let step=moving?Math.sin(phase)*7:0;let bob=moving?Math.abs(Math.sin(phase))*2:0;ctx.save();ctx.translate(x,y-bob);ctx.scale(red?1:(u.unitKey==='celt'?1:-1),1);ctx.fillStyle='#0008';ctx.beginPath();ctx.ellipse(0,13,19,6,0,0,Math.PI*2);ctx.fill();if(u.unitKey==='celt'){
+function soldier(u){let x=u.x,y=u.y,red=u.side===1;let moving=S.run&&!S.paused&&!S.ended;let phase=moving?S.time*9+u.id:0;let step=moving?Math.sin(phase)*7:0;let bob=moving?Math.abs(Math.sin(phase))*2:0;
+if(u.dead){
+ const elapsed=u.deathT||0, alpha=Math.max(.12,1-elapsed/3.2);
+ ctx.save();ctx.translate(x,y+5);ctx.globalAlpha=alpha;
+ if(u.unitKey==='gladiator'){
+   const di=Math.min(gladiatorDeath.length-1,Math.floor(elapsed*2.2));
+   const sp=gladiatorDeath[di]; if(sp&&sp.complete&&sp.naturalWidth){ctx.imageSmoothingEnabled=false;const dh=76,dw=dh*sp.naturalWidth/sp.naturalHeight;ctx.drawImage(sp,-dw/2,-dh+12,dw,dh);}
+ }else{
+   ctx.rotate(red?1.25:-1.25);ctx.fillStyle=red?'#8f2b25':'#335b42';ctx.fillRect(-25,-12,45,17);ctx.fillStyle='#c9a078';ctx.beginPath();ctx.arc(22,-4,9,0,Math.PI*2);ctx.fill();ctx.fillStyle='#c4b28c';ctx.fillRect(-13,-18,24,6);
+ }
+ ctx.restore();return;
+}
+ctx.save();ctx.translate(x,y-bob);ctx.scale(red?1:(u.unitKey==='celt'?1:-1),1);ctx.fillStyle='#0008';ctx.beginPath();ctx.ellipse(0,13,19,6,0,0,Math.PI*2);ctx.fill();
+if(u.unitKey==='gladiator'){
+ const targetNearby=S.run&&S.army.some(e=>e.hp>0&&!e.dead&&e.side!==u.side&&Math.abs(e.x-u.x)<=u.range);
+ let frames,rate;
+ if(!moving){frames=gladiatorIdle;rate=3;}
+ else if(targetNearby&&Math.abs(u.cool||0)<.25){frames=gladiatorAttack;rate=10;}
+ else {frames=gladiatorWalk;rate=7.5;}
+ const sp=frames[Math.floor((S.time*rate+u.id)%frames.length)];
+ if(sp&&sp.complete&&sp.naturalWidth){ctx.imageSmoothingEnabled=false;const dh=76,dw=dh*sp.naturalWidth/sp.naturalHeight;ctx.drawImage(sp,-dw/2,-dh+12,dw,dh);ctx.fillStyle='#090c0f';ctx.fillRect(-22,-dh+7,44,5);ctx.fillStyle=red?'#ed4c43':'#58aaff';ctx.fillRect(-22,-dh+7,44*Math.max(0,u.hp/u.max),5);ctx.restore();return;}
+}
+if(u.unitKey==='celt'){
  const frames=celtWalk;
  const sp=frames[Math.floor((S.time*(u.enemyTier>=4?10:7.2)+u.id)%frames.length)];
  if(sp&&sp.complete&&sp.naturalWidth){
    ctx.imageSmoothingEnabled=false;
-   const drawH=u.enemyTier>=4?120:u.enemyTier>=2?112:106;
+   const drawH=76;
    const drawW=drawH*sp.naturalWidth/sp.naturalHeight;
    ctx.drawImage(sp,-drawW/2,-drawH+12,drawW,drawH);
    ctx.fillStyle='#090c0f';ctx.fillRect(-22,-drawH+7,44,5);
@@ -139,7 +165,7 @@ function soldier(u){let x=u.x,y=u.y,red=u.side===1;let moving=S.run&&!S.paused&&
  }
 }
 if(u.unitKey==='servant'||u.unitKey==='sword'){
-let targetNearby=S.run&&S.army.some(e=>e.hp>0&&e.side!==u.side&&Math.abs(e.x-u.x)<=u.range);
+let targetNearby=S.run&&S.army.some(e=>e.hp>0&&!e.dead&&e.side!==u.side&&Math.abs(e.x-u.x)<=u.range);
 let frames,rate=7;
 if(u.unitKey==='sword'){frames=swordWalk;}
 else if(!moving){frames=servantIdle;rate=3.2;}
@@ -147,7 +173,7 @@ else if(targetNearby){frames=servantWalk;rate=5.5;}
 else {frames=servantWalk;rate=7.5;}
 let si=Math.floor((S.time*rate+u.id)%frames.length);
 let sp=frames[si];
-if(sp&&sp.complete&&sp.naturalWidth){ctx.imageSmoothingEnabled=false;let drawH=u.unitKey==='sword'?108:112,drawW=drawH*sp.naturalWidth/sp.naturalHeight;ctx.drawImage(sp,-drawW/2,-drawH+12,drawW,drawH);ctx.fillStyle='#090c0f';ctx.fillRect(-19,-drawH+12,38,4);ctx.fillStyle=red?'#ed4c43':'#58aaff';ctx.fillRect(-19,-drawH+12,38*Math.max(0,u.hp/u.max),4);ctx.restore();return;}}let color=red?'#9d2924':'#234f7e',metal='#c8b99a';// legs
+if(sp&&sp.complete&&sp.naturalWidth){ctx.imageSmoothingEnabled=false;let drawH=76,drawW=drawH*sp.naturalWidth/sp.naturalHeight;ctx.drawImage(sp,-drawW/2,-drawH+12,drawW,drawH);ctx.fillStyle='#090c0f';ctx.fillRect(-19,-drawH+12,38,4);ctx.fillStyle=red?'#ed4c43':'#58aaff';ctx.fillRect(-19,-drawH+12,38*Math.max(0,u.hp/u.max),4);ctx.restore();return;}}ctx.scale(1.55,1.55);let color=red?'#9d2924':'#234f7e',metal='#c8b99a';// legs
 ctx.strokeStyle='#26282b';ctx.lineWidth=6;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(-5,0);ctx.lineTo(-8-step,12);ctx.moveTo(5,0);ctx.lineTo(8+step,12);ctx.stroke();
 // tunic and armor
 ctx.fillStyle=color;ctx.beginPath();ctx.moveTo(-11,-20);ctx.lineTo(10,-20);ctx.lineTo(13,2);ctx.lineTo(-13,2);ctx.closePath();ctx.fill();ctx.strokeStyle=metal;ctx.lineWidth=2;ctx.stroke();
@@ -167,7 +193,7 @@ if(!S.run&&!S.ended){ctx.fillStyle='#0a0c10a8';ctx.fillRect(280,230,720,85);ctx.
 if(S.paused){ctx.fillStyle='#0009';ctx.fillRect(0,0,w,h);ctx.fillStyle='#fff0be';ctx.textAlign='center';ctx.font='900 44px Georgia';ctx.fillText('BATALLA EN PAUSA',w/2,h/2);}
 if(S.ended){ctx.fillStyle='#000b';ctx.fillRect(0,0,w,h);ctx.fillStyle='#ffe0a0';ctx.textAlign='center';ctx.font='900 42px Georgia';ctx.fillText(S.result,w/2,h/2);}
 }
-function render(){let req=100+(S.level-1)*40;$('level').textContent=S.level;$('levelTop').textContent=S.level;$('manaTop').textContent=Math.floor(S.mana)+'/'+S.cap;$('manaText').textContent=Math.floor(S.mana)+' / '+S.cap+(S.run&&!S.paused&&!S.ended?' · +'+S.regen.toFixed(1)+' por segundo':' · inicia la batalla para generar');$('manaFill').style.width=(S.mana/S.cap*100)+'%';$('troopsTop').textContent=S.army.filter(u=>u.side===1).length;$('phpText').textContent=Math.ceil(Math.max(0,S.php));$('ehpText').textContent=Math.ceil(Math.max(0,S.ehp));$('php').style.width=Math.max(0,S.php/10)+'%';$('ehp').style.width=Math.max(0,S.ehp/10)+'%';$('timer').textContent=String(Math.floor(S.time/60)).padStart(2,'0')+':'+String(Math.floor(S.time%60)).padStart(2,'0');$('xpText').textContent=Math.floor(S.xp)+' / '+req+' XP';$('xpFill').style.width=S.xp/req*100+'%';$('startBtn').textContent=S.ended?'⚔️ Nueva batalla':S.run?'⚔️ Batalla en curso':'⚔️ Iniciar batalla';$('startBtn').disabled=S.run&&!S.paused;$('pauseBtn').disabled=!S.run||S.ended;$('pauseBtn').textContent=S.paused?'▶ Reanudar':'Ⅱ Pausar';$('battleStatus').textContent=S.ended?'BATALLA TERMINADA':S.paused?'PAUSA':S.run?'BATALLA EN CURSO':'PREPARACIÓN';$('capBtn').disabled=S.xp<60;$('regenBtn').disabled=S.xp<80;$('manaExpandBtn').disabled=S.mana<S.cap||!S.run||S.paused||S.ended;document.querySelectorAll('[data-hero]').forEach(b=>b.disabled=!S.run||S.paused||S.mana<heroes[b.dataset.hero].cost||S.ended);renderCards();}
+function render(){let req=100+(S.level-1)*40;$('level').textContent=S.level;$('levelTop').textContent=S.level;$('manaTop').textContent=Math.floor(S.mana)+'/'+S.cap;$('manaText').textContent=Math.floor(S.mana)+' / '+S.cap+(S.run&&!S.paused&&!S.ended?' · +'+S.regen.toFixed(1)+' por segundo':' · inicia la batalla para generar');$('manaFill').style.width=(S.mana/S.cap*100)+'%';$('troopsTop').textContent=S.army.filter(u=>u.side===1&&!u.dead&&u.hp>0).length;$('phpText').textContent=Math.ceil(Math.max(0,S.php));$('ehpText').textContent=Math.ceil(Math.max(0,S.ehp));$('php').style.width=Math.max(0,S.php/10)+'%';$('ehp').style.width=Math.max(0,S.ehp/10)+'%';$('timer').textContent=String(Math.floor(S.time/60)).padStart(2,'0')+':'+String(Math.floor(S.time%60)).padStart(2,'0');$('xpText').textContent=Math.floor(S.xp)+' / '+req+' XP';$('xpFill').style.width=S.xp/req*100+'%';$('startBtn').textContent=S.ended?'⚔️ Nueva batalla':S.run?'⚔️ Batalla en curso':'⚔️ Iniciar batalla';$('startBtn').disabled=S.run&&!S.paused;$('pauseBtn').disabled=!S.run||S.ended;$('pauseBtn').textContent=S.paused?'▶ Reanudar':'Ⅱ Pausar';$('battleStatus').textContent=S.ended?'BATALLA TERMINADA':S.paused?'PAUSA':S.run?'BATALLA EN CURSO':'PREPARACIÓN';$('capBtn').disabled=S.xp<60;$('regenBtn').disabled=S.xp<80;$('manaExpandBtn').disabled=S.mana<S.cap||!S.run||S.paused||S.ended;document.querySelectorAll('[data-hero]').forEach(b=>b.disabled=!S.run||S.paused||S.mana<heroes[b.dataset.hero].cost||S.ended);renderCards();}
 let lastFrame=0;function loop(now){let dt=Math.min(.05,(now-lastFrame)/1000||0);lastFrame=now;update(dt);draw();render();requestAnimationFrame(loop);}
 $('startBtn').onclick=()=>{if(S.ended)reset();S.run=true;S.paused=false;message('¡Comienza la batalla! Ahora se genera maná a '+S.regen+'/s.');log('¡Comienza la batalla por Roma!');};
 $('pauseBtn').onclick=()=>{S.paused=!S.paused;message(S.paused?'Batalla pausada.':'¡A la batalla!');};
@@ -179,5 +205,5 @@ document.querySelectorAll('[data-hero]').forEach(b=>b.addEventListener('click',(
 reset();renderCards();render();requestAnimationFrame(loop);
 })();
 </script>
-<script>if('serviceWorker'in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=imperium13').catch(()=>{}));}</script>
+<script>if('serviceWorker'in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=imperium16').catch(()=>{}));}</script>
 </body></html>

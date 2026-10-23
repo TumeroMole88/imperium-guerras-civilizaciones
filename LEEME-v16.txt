@@ -1,0 +1,16 @@
+IMPERIUM v1.6 — GLADIADOR Y ANIMACIÓN DE DERROTA
+
+Incluye:
+- Gladiador reclutable por 60 de maná.
+- Gladiador más resistente y con mayor daño que el guerrero con espada.
+- Animaciones separadas de espera, caminar, ataque y caída.
+- Estado de derrota común para las demás unidades: al llegar a 0 HP dejan de luchar, caen y permanecen unos segundos antes de retirarse.
+- Caché del service worker actualizada a imperium-16.
+
+Instalación:
+1. Descomprime el ZIP.
+2. Sube TODOS los archivos de esta carpeta a la raíz del repositorio de GitHub, reemplazando los anteriores.
+3. Haz Commit changes.
+4. Espera a GitHub Pages y recarga con Cmd+Shift+R.
+
+Nota: la animación genérica de caída para unidades sin hoja de muerte usa una caída simplificada. El gladiador usa los fotogramas de muerte recortados de su hoja.

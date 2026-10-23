@@ -19,3 +19,10 @@ INCLUYE
 
 IMPORTANTE
 La hoja del guerrero galo suministrada contiene varias acciones; en esta versión se incorporó la fila de caminar. Las demás acciones del galo y animaciones específicas de ataque para todas las tropas todavía requieren integración adicional. Las torres usan fotogramas extraídos de las hojas recibidas; conviene probarlas en el navegador publicado y ajustar visualmente si hiciera falta.
+
+
+VERSION 1.4 - ESCALA UNIFORME
+- Todos los sprites de tropas usan una altura de dibujo común de 76 px.
+- Las unidades vectoriales de reserva se escalan para acercarse a esa altura.
+- Las torres usan una altura de dibujo de 190 px, mayor que las tropas.
+- Caché actualizada para forzar la nueva versión.

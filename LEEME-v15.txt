@@ -1,0 +1,9 @@
+Imperium v1.5 - corrección visual de la torre gala
+
+Cambios:
+- Se aisló la torre gala de la hoja original y se eliminaron píxeles azules/cian del paisaje.
+- Los fotogramas de ataque usan la torre limpia y estable para evitar que parpadee o se vuelva azul.
+- La fase de destrucción usa un recorte de las ruinas de la hoja.
+- Se actualizó el nombre de caché del service worker a imperium-15.
+
+Nota: para priorizar una torre limpia, las fases de ataque de la torre gala se muestran como torre estable; la animación de lanzamiento no está representada con movimiento en esta revisión.
